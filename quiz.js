@@ -1,6 +1,8 @@
-
-
-
+class Quiz{
+    constructor(){
+        
+    }
+}
 
 function fetchData() {
 
@@ -11,6 +13,3 @@ function fetchData() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function(event) { 
-    console.log(fetchData());
-})
