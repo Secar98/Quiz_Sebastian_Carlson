@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     
     function Questions() {
         let questionArray = [];
-        for (let i = 0; i < amountOfQuestions; i++){ // 10 kan bytas mot hur många frågot användaren vill ha
+        for (let i = 0; i < amount; i++){ // 10 kan bytas mot hur många frågot användaren vill ha
             questionArray.push(quiz.fetchData(i));
         }
         return questionArray;
