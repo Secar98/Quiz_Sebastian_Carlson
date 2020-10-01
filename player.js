@@ -3,9 +3,9 @@ class Player {
         this.name = name;
         this.score = score
     }
-    createPlayer() {
+    /*createPlayer() {
         let name = document.getElementById("player-text").value;
         let score = 0;
         return name + score;
-    }
+    }*/
 }
