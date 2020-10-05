@@ -9,11 +9,11 @@ class Game {
         let player_button = document.getElementById("playerBtn");
         let player_info = document.getElementById("info-player");
         let player_score = document.getElementById("score-player");
-        
+        let score;
 
         player_button.addEventListener("click", function (e) {
             let name = document.getElementById("player-text").value;
-            let score = 0;
+            score = 0;
             let player = new Player(name, score);
             console.log(player);
             player_info.innerHTML = "Name: " + player.name;
@@ -37,7 +37,6 @@ class Game {
             for (let i = 1; i <= 6; i++) {
                 answerInput.push(document.getElementById("input" + [i]).checked);
             }
-            console.log(answerInput);
         })
 
 
@@ -45,10 +44,9 @@ class Game {
         submit.addEventListener("click", function (e) {
             if (count < 10) { // Ittererar genom frågorna  
                 let correct_amount = 0;
+                
                 let answerArray = Object.values(myArray[count].answers); 
                 let correct_answer = Object.values(myArray[count].correct_answers);
-                
-                console.log(myArray);
                 for (let i = 0; i <= 6; i++) {
                     if (correct_answer[i] == "true") {
                         correct_amount++;
@@ -58,6 +56,9 @@ class Game {
                 question.innerHTML = myArray[count].question;
                 for(let i = 0; i < answerOutput.length; i++) {
                     answerOutput[i].textContent = answerArray[i];
+                }
+                for (let i = 1; i <= 6; i++) {
+                    document.getElementById("input" + [i]).checked = false;
                 }
                 count++;
             } else { // starta om spelet
@@ -77,12 +78,6 @@ class Game {
 }
 
 
-
-/*
-    Behöver hämta vad användaren klickar i för checkbox,
-    och sen jämföra det med correct_answers inte correct_answer
-*/
-
 /*
 Din uppgift är att skriva en quiz-applikation. En quiz-applikation är ett frågesport-spel.
 
@@ -94,6 +89,7 @@ Quizet ska hålla reda på en spelare.
 Det ska hantera spelarens namn, spelarens poäng i den aktuella omgången.
 Frågorna ska läsas in från https://quizapi.io/ som levererar ett resultat i JSON.
 Du måste använda ditt omdöme och göra en analys av kraven för att kunna leva upp till dem.
+
 
 G-krav
 
