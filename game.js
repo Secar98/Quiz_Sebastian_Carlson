@@ -1,128 +1,128 @@
 class Game {
-    constructor(array) {
-        this.array = array;
-        this.gameMetod(this.array);
+  constructor(array) {
+    this.array = array;
+    this.gameMetod(this.array);
+  }
+  gameMetod(inputArray) {
+    // Create player and score! ------------------------------------------------------------------------
+    let player_button = document.getElementById("playerBtn");
+    let player_info = document.getElementById("info-player");
+    let player_score = document.getElementById("score-player");
+    let quiz_form = document.getElementById("quiz-form");
+    let question = document.getElementById("question");
+    let submit = document.getElementById("submit");
+    let submitAnswer = document.getElementById("submitAnswer");
+    let restart = document.getElementById("restart");
+    let cancel = document.getElementById("restart-alert")
+
+    let answerOutput = [];
+    let answerInput = [];
+
+    let score;
+    let myArray = inputArray;
+    let name;
+    let count = 0;
+    let player = new Player(name, score);
+
+    player_button.addEventListener("click", function (e) {
+      player.name = document.getElementById("player-text").value;
+      player.score = 0;
+      console.log(player);
+      player_info.innerHTML = "Name: " + player.name;
+      player_score.innerHTML = "Score: " + player.score;
+      submit.classList.remove("hide");
+      player_button.classList.add("hide");
+      let playerform = document.getElementById("player-form");
+      playerform.classList.add("hide");
+    });
+
+    // Outputing questions, answers and outputing score -----------------------------------------------
+
+    for (let i = 1; i <= 6; i++) {
+      answerOutput.push(document.getElementById("text-input" + [i]));
     }
-    gameMetod(inputArray) {
 
-        // Create player and score! ------------------------------------------------------------------------
-        let player_button = document.getElementById("playerBtn");
-        let player_info = document.getElementById("info-player");
-        let player_score = document.getElementById("score-player");
-        let quiz_form = document.getElementById("quiz-form");
-        let question = document.getElementById("question");
-        let submit = document.getElementById("submit");
-        let submitAnswer = document.getElementById("submitAnswer");
-        let restart = document.getElementById("restart");
-        
-        let answerOutput = [];
-        let answerInput = [];
+    quiz_form.addEventListener("change", function (e) {
+      answerInput = [];
+      for (let i = 1; i <= 6; i++) {
+        answerInput.push(document.getElementById("input" + [i]).checked);
+      }
+    });
 
-        let score;
-        let myArray = inputArray;
-        let name;
-        let count = 0;
-        let player = new Player(name, score);
-
-        
-    
-        player_button.addEventListener("click", function (e) {
-            player.name = document.getElementById("player-text").value;
-            player.score = 0;
-            console.log(player);
-            player_info.innerHTML = "Name: " + player.name;
-            player_score.innerHTML = "Score: " + player.score;
-            submit.classList.remove("hide");
-            player_button.classList.add("hide")
-            let playerform = document.getElementById("player-form");
-            playerform.classList.add("hide");
-        })
-
-        // Outputing questions, answers and outputing score -----------------------------------------------
-        
-
-        for (let i = 1; i <= 6; i++) {
-            answerOutput.push(document.getElementById("text-input" + [i]));
+    submitAnswer.addEventListener("click", function (e) {
+      let correct_answer = Object.values(myArray[count].correct_answers);
+      let correct_amount = 0;
+      let stringArray = answerInput.map((x) => x.toString());
+      for (let i = 0; i < correct_answer.length; i++) {
+        if (correct_answer[i] == stringArray[i]) {
+          correct_amount++;
         }
+      }
+      if (correct_amount == 6) {
+        player.score++;
+        player_score.innerHTML = "Score: " + player.score;
+      }
+      for (let i = 1; i <= 6; i++) {
+        document.getElementById("input" + [i]).checked = false;
+      }
+      answerInput = [];
+      count++;
+      if (count <= 10) {
+        submit.classList.remove("hide");
+      }
+      console.log(count);
+      submitAnswer.classList.add("hide");
+    });
 
-        quiz_form.addEventListener("change", function (e) {
-            answerInput = [];
-            for (let i = 1; i <= 6; i++) {
-                answerInput.push(document.getElementById("input" + [i]).checked);
-            }
-            
-        })
+    // Object.values()
+    submit.addEventListener("click", function (e) {
+      if (count < 10) {
+        // Ittererar genom frågorna
+        submitAnswer.classList.remove("hide");
+        console.log(myArray);
+        let answerArray = Object.values(myArray[count].answers);
+        submit.textContent = "Nästa fråga!";
+        question.textContent = myArray[count].question;
+        for (let i = 0; i < answerOutput.length; i++) {
+          answerOutput[i].textContent = answerArray[i];
+        }
+        for (let i = 1; i <= 6; i++) {
+          document.getElementById("input" + [i]).checked = false;
+        }
+        submit.classList.add("hide");
+      } else {
+        // starta om spelet
+        if (confirm("Vill du starta om?")) {
+            //txt = "You pressed OK!";
+            question.textContent = "";
+            for (let i = 0; i < answerOutput.length; i++) {
+                answerOutput[i].textContent = "";
+              }
+            restart.classList.remove("hide");
+            submit.classList.add("hide");
+          } else {
+            //txt = "You pressed Cancel!";
+            cancel.classList.add("hide");
+          }
         
-        
+      }
+    });
+    restart.addEventListener("click", function (e) {
+      player.score = 0;
 
-        submitAnswer.addEventListener("click", function (e) {
-            let correct_answer = Object.values(myArray[count].correct_answers);
-                let correct_amount = 0;
-                let stringArray = answerInput.map(x => x.toString());
-                for (let i = 0; i < correct_answer.length; i++){
-                    if (correct_answer[i] == stringArray[i]) {
-                        correct_amount++;
-                    }
-                }
-                if(correct_amount == 6) {
-                    player.score++;
-                    player_score.innerHTML = "Score: " + player.score;
-                    
-                }
-                for (let i = 1; i <= 6; i++) {
-                    document.getElementById("input" + [i]).checked = false;
-                }
-                answerInput = [];
-                count++;
-                if(count <= 10){
-                    submit.classList.remove("hide");   
-                }
-                console.log(count);
-                submitAnswer.classList.add("hide");
-                             
-        })
-
-        // Object.values()
-        submit.addEventListener("click", function (e) {
-            if (count < 10) { // Ittererar genom frågorna  
-                submitAnswer.classList.remove("hide");
-                console.log(myArray);
-                let answerArray = Object.values(myArray[count].answers); 
-                submit.textContent = "Nästa fråga!";
-                question.innerHTML = myArray[count].question;
-                for(let i = 0; i < answerOutput.length; i++) {
-                    answerOutput[i].textContent = answerArray[i];
-                }
-                for (let i = 1; i <= 6; i++) {
-                    document.getElementById("input" + [i]).checked = false;
-                }
-                submit.classList.add("hide");
-                } else { // starta om spelet
-                    restart.classList.remove("hide");
-                    submit.classList.add("hide");
-            }                  
-
-        })  
-        restart.addEventListener("click", function (e) {
-            player.score = 0;
-            
-            player_score.innerHTML = "Score: " + player.score;
-            count = 0;
-            // kan låta användaren välja amount, problem
-            fetch('https://quizapi.io/api/v1/questions?apiKey=ApIq7xjNwiSVvRYkKtGckbRBzQvw1MhiHbM1iZFe&limit=10')
-            .then(response => response.json())
-            .then(data => (myArray = data));
-            restart.classList.add("hide");
-            submit.classList.remove("hide");
-        })
-        
-        
-
-        
-        
-    }
+      player_score.innerHTML = "Score: " + player.score;
+      count = 0;
+      // kan låta användaren välja amount, problem
+      fetch(
+        "https://quizapi.io/api/v1/questions?apiKey=ApIq7xjNwiSVvRYkKtGckbRBzQvw1MhiHbM1iZFe&limit=10"
+      )
+        .then((response) => response.json())
+        .then((data) => (myArray = data));
+      restart.classList.add("hide");
+      submit.classList.remove("hide");
+    });
+  }
 }
-
 
 /*
 Din uppgift är att skriva en quiz-applikation. En quiz-applikation är ett frågesport-spel.
