@@ -52,7 +52,6 @@ class Game {
             }
             
         })
-        console.log(myArray);
         
         
 
@@ -67,7 +66,6 @@ class Game {
                 }
                 if(correct_amount == 6) {
                     player.score++;
-                    console.log(player.score)
                     player_score.innerHTML = "Score: " + player.score;
                     
                 }
@@ -88,6 +86,7 @@ class Game {
         submit.addEventListener("click", function (e) {
             if (count < 10) { // Ittererar genom frågorna  
                 submitAnswer.classList.remove("hide");
+                console.log(myArray);
                 let answerArray = Object.values(myArray[count].answers); 
                 submit.textContent = "Nästa fråga!";
                 question.innerHTML = myArray[count].question;
@@ -99,22 +98,24 @@ class Game {
                 }
                 submit.classList.add("hide");
                 } else { // starta om spelet
-                submit.textContent = "Tryck för att starta om!";
-                player.score = 0;
-                console.log(player.score);
-                player_score.innerHTML = "Score: " + player.score;
-                
-                count = 0;
-                 // kan låta användaren välja amount, problem
-                fetch('https://quizapi.io/api/v1/questions?apiKey=ApIq7xjNwiSVvRYkKtGckbRBzQvw1MhiHbM1iZFe&limit=10')
-                .then(response => response.json())
-                .then(data => myArray = data);
-                console.log(myArray);   
-            }    
-                                         
+                    restart.classList.remove("hide");
+                    submit.classList.add("hide");
+            }                  
 
+        })  
+        restart.addEventListener("click", function (e) {
+            player.score = 0;
+            
+            player_score.innerHTML = "Score: " + player.score;
+            count = 0;
+            // kan låta användaren välja amount, problem
+            fetch('https://quizapi.io/api/v1/questions?apiKey=ApIq7xjNwiSVvRYkKtGckbRBzQvw1MhiHbM1iZFe&limit=10')
+            .then(response => response.json())
+            .then(data => (myArray = data));
+            restart.classList.add("hide");
+            submit.classList.remove("hide");
         })
-
+        
         
 
         
