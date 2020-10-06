@@ -3,4 +3,5 @@ class Player {
         this.name = name;
         this.score = score
     }
+    
 }

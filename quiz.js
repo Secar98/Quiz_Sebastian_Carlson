@@ -1,6 +1,6 @@
 class Quiz{
-    constructor(amount){
-        this.amount = 'https://quizapi.io/api/v1/questions?apiKey=ApIq7xjNwiSVvRYkKtGckbRBzQvw1MhiHbM1iZFe&limit=' + [amount];
+    constructor(){
+        this.amount = 'https://quizapi.io/api/v1/questions?apiKey=ApIq7xjNwiSVvRYkKtGckbRBzQvw1MhiHbM1iZFe&limit=10';
     }
     fetchApi() {
         fetch(this.amount)

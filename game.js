@@ -3,7 +3,7 @@ class Game {
         this.array = array;
         this.gameMetod(this.array);
     }
-    gameMetod(myArray) {
+    gameMetod(inputArray) {
 
         // Create player and score! ------------------------------------------------------------------------
         let player_button = document.getElementById("playerBtn");
@@ -13,22 +13,22 @@ class Game {
         let question = document.getElementById("question");
         let submit = document.getElementById("submit");
         let submitAnswer = document.getElementById("submitAnswer");
+        let restart = document.getElementById("restart");
         
         let answerOutput = [];
         let answerInput = [];
 
         let score;
+        let myArray = inputArray;
+        let name;
         let count = 0;
-        
-        submitAnswer.classList.add("hide");
-        submit.classList.add("hide");
+        let player = new Player(name, score);
 
         
     
         player_button.addEventListener("click", function (e) {
-            let name = document.getElementById("player-text").value;
-            score = 0;
-            let player = new Player(name, score);
+            player.name = document.getElementById("player-text").value;
+            player.score = 0;
             console.log(player);
             player_info.innerHTML = "Name: " + player.name;
             player_score.innerHTML = "Score: " + player.score;
@@ -66,8 +66,9 @@ class Game {
                     }
                 }
                 if(correct_amount == 6) {
-                    score++;
-                    player_score.innerHTML = "Score: " + score;
+                    player.score++;
+                    console.log(player.score)
+                    player_score.innerHTML = "Score: " + player.score;
                     
                 }
                 for (let i = 1; i <= 6; i++) {
@@ -96,14 +97,21 @@ class Game {
                 for (let i = 1; i <= 6; i++) {
                     document.getElementById("input" + [i]).checked = false;
                 }
+                submit.classList.add("hide");
                 } else { // starta om spelet
                 submit.textContent = "Tryck för att starta om!";
+                player.score = 0;
+                console.log(player.score);
+                player_score.innerHTML = "Score: " + player.score;
+                
                 count = 0;
-                score = 0;
-                let new_quiz = new Quiz(10); // kan låta användaren välja amount, problem
-                new_quiz.fetchApi();
+                 // kan låta användaren välja amount, problem
+                fetch('https://quizapi.io/api/v1/questions?apiKey=ApIq7xjNwiSVvRYkKtGckbRBzQvw1MhiHbM1iZFe&limit=10')
+                .then(response => response.json())
+                .then(data => myArray = data);
+                console.log(myArray);   
             }    
-            submit.classList.add("hide");                             
+                                         
 
         })
 
