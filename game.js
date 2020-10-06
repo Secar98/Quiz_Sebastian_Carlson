@@ -9,8 +9,22 @@ class Game {
         let player_button = document.getElementById("playerBtn");
         let player_info = document.getElementById("info-player");
         let player_score = document.getElementById("score-player");
-        let score;
+        let quiz_form = document.getElementById("quiz-form");
+        let question = document.getElementById("question");
+        let submit = document.getElementById("submit");
+        let submitAnswer = document.getElementById("submitAnswer");
+        
+        let answerOutput = [];
+        let answerInput = [];
 
+        let score;
+        let count = 0;
+        
+        submitAnswer.classList.add("hide");
+        submit.classList.add("hide");
+
+        
+    
         player_button.addEventListener("click", function (e) {
             let name = document.getElementById("player-text").value;
             score = 0;
@@ -18,22 +32,19 @@ class Game {
             console.log(player);
             player_info.innerHTML = "Name: " + player.name;
             player_score.innerHTML = "Score: " + player.score;
+            submit.classList.remove("hide");
+            player_button.classList.add("hide")
+            let playerform = document.getElementById("player-form");
+            playerform.classList.add("hide");
         })
 
-        // Outputing questions, answers and outputing score -------------------------------------------------
-
-        let answerOutput = [];
-        let answerInput = [];
-        let quiz_form = document.getElementById("quiz-form");
-        let question = document.getElementById("question");
-        let submit = document.getElementById("submit");
-        let submitAnswer = document.getElementById("submitAnswer");
-        let count = 0;
+        // Outputing questions, answers and outputing score -----------------------------------------------
+        
 
         for (let i = 1; i <= 6; i++) {
             answerOutput.push(document.getElementById("text-input" + [i]));
         }
-        console.log(answerOutput);
+
         quiz_form.addEventListener("change", function (e) {
             answerInput = [];
             for (let i = 1; i <= 6; i++) {
@@ -41,13 +52,14 @@ class Game {
             }
             
         })
+        console.log(myArray);
+        
+        
 
         submitAnswer.addEventListener("click", function (e) {
+            let correct_answer = Object.values(myArray[count].correct_answers);
                 let correct_amount = 0;
-                let correct_answer = Object.values(myArray[count].correct_answers);
                 let stringArray = answerInput.map(x => x.toString());
-                console.log(stringArray);
-                console.log(correct_answer);
                 for (let i = 0; i < correct_answer.length; i++){
                     if (correct_answer[i] == stringArray[i]) {
                         correct_amount++;
@@ -62,15 +74,19 @@ class Game {
                     document.getElementById("input" + [i]).checked = false;
                 }
                 answerInput = [];
-                submit.answers.disabled;
-                
-        
+                count++;
+                if(count <= 10){
+                    submit.classList.remove("hide");   
+                }
+                console.log(count);
+                submitAnswer.classList.add("hide");
+                             
         })
 
         // Object.values()
         submit.addEventListener("click", function (e) {
             if (count < 10) { // Ittererar genom frågorna  
-                
+                submitAnswer.classList.remove("hide");
                 let answerArray = Object.values(myArray[count].answers); 
                 submit.textContent = "Nästa fråga!";
                 question.innerHTML = myArray[count].question;
@@ -80,15 +96,14 @@ class Game {
                 for (let i = 1; i <= 6; i++) {
                     document.getElementById("input" + [i]).checked = false;
                 }
-                submit.answers.enabled;
-                count++;
-                
-            } else { // starta om spelet
+                } else { // starta om spelet
                 submit.textContent = "Tryck för att starta om!";
                 count = 0;
+                score = 0;
                 let new_quiz = new Quiz(10); // kan låta användaren välja amount, problem
                 new_quiz.fetchApi();
-            }                                 
+            }    
+            submit.classList.add("hide");                             
 
         })
 
