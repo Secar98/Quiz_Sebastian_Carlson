@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Start</title>
     <link rel="stylesheet" href="style.css">
-    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+    </style>
 </head>
+
 <body>
     <div class="header">
         <a href="index.html">Home</a>
@@ -15,74 +19,66 @@
     </div>
     <div class="body-background">
         <h1>Quiz!</h1>
-    <div class="main" id="player-form">
-        <form class="player-name">
-            <label for="player">Spelarens namn</label><br>
-            <input type="text" name="player" id="player-text" placeholder="Sebastian"><br>
-            <!--<label for="question">
-                <select name="question" id="question-amount">
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-              </select>
-            </label>-->
-        </form>
-        <div class="button-div">
-            <button id="playerBtn" class="player-button">Submit</button>
+        <div class="main" id="player-form">
+            <form class="player-name">
+                <label for="player">Spelarens namn:</label>
+                <input type="text" name="player" id="player-text" placeholder="Sebastian">
+            </form>
+            <div class="button-div">
+                <button id="playerBtn" class="player-button">Submit</button>
+            </div>
         </div>
-    </div>
-        
 
-        <div class="player-info">
+
+        <div id="player-stats" class="player-info hide">
             <p id="info-player"></p>
             <p id="score-player"></p>
-        </div>        
-    <div id="restart-alert">    
-        <div class="quiz-question">
-            <p id="question"></p>
         </div>
-        <div class="quiz-answers" id="quiz-form">
-            <label class="answers">
-                <p>a</p><input type="checkbox" id="input1" name="box1">
-                <span id="text-input1"></span>
-            </label>
-            <label class="answers">
-                <p>b</p><input type="checkbox" id="input2" name="box2">
-                <span id="text-input2"></span>
-            </label>    
-            <label class="answers">
-                <p>c</p><input type="checkbox" id="input3" name="box3">
-                <span id="text-input3"></span>
-            </label>
-            <label class="answers">
-                <p>d</p><input type="checkbox" id="input4" name="box4">
-                <span id="text-input4"></span>
-            </label> 
-            <label class="answers">
-                <p>e</p><input type="checkbox" id="input5" name="box5">
-                <span id="text-input5"></span>
-            </label>
-            <label class="answers">
-                <p>f</p><input type="checkbox" id="input6" name="box6">
-                <span id="text-input6"></span>
-            </label>   
+        <div id="question-and-answer" class="hide">
+            <div class="quiz-question">
+                <p id="question-number"></p>
+                <p id="question" class="question-css"></p>
+            </div>
+            <div class="quiz-answers" id="quiz-form">
+                <label class="answers">
+                    <p>a</p><input type="checkbox" id="input1" name="box1">
+                    <span id="text-input1"></span>
+                </label>
+                <label class="answers">
+                    <p>b</p><input type="checkbox" id="input2" name="box2">
+                    <span id="text-input2"></span>
+                </label>
+                <label class="answers">
+                    <p>c</p><input type="checkbox" id="input3" name="box3">
+                    <span id="text-input3"></span>
+                </label>
+                <label class="answers">
+                    <p>d</p><input type="checkbox" id="input4" name="box4">
+                    <span id="text-input4"></span>
+                </label>
+                <label class="answers">
+                    <p>e</p><input type="checkbox" id="input5" name="box5">
+                    <span id="text-input5"></span>
+                </label>
+                <label class="answers">
+                    <p>f</p><input type="checkbox" id="input6" name="box6">
+                    <span id="text-input6"></span>
+                </label>
+            </div>
+            <div class="button">
+                <button id="submitAnswer" class="btn hide">Submit Answer</button>
+            </div>
+            <div class="button">
+                <button id="submit" class="btn hide">Läs in fråga</button>
+            </div>
+            <div class="button">
+                <button id="restart" class="btn hide">Läs in nästa Spel!</button>
+            </div>
         </div>
-        <div class="button">
-            <button id="submitAnswer" class="btn hide">Submit Answer</button>
-        </div>
-        <div class="button">
-            <button id="submit" class="btn hide">Läs in fråga</button>
-        </div>
-        <div class="button">
-            <button id="restart" class="btn hide">Läs in nästa Spel!</button>
-        </div>
-    </div>
-    <script src="quiz.js"></script>
-    <script src="player.js"></script>
-    <script src="main.js"></script>
-    <script src="game.js"></script>
+        <script src="quiz.js"></script>
+        <script src="player.js"></script>
+        <script src="main.js"></script>
+        <script src="game.js"></script>
 </body>
+
 </html>

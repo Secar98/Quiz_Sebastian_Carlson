@@ -1,10 +1,10 @@
 class Game {
   constructor(array) {
     this.array = array;
-    this.gameMetod(this.array);
+    this.gameCount = 1;
+    this.gameMetod(this.array, this.gameCount);
   }
-  gameMetod(inputArray) {
-    // Create player and score! ------------------------------------------------------------------------
+  gameMetod(inputArray, gameCount) {
     let player_button = document.getElementById("playerBtn");
     let player_info = document.getElementById("info-player");
     let player_score = document.getElementById("score-player");
@@ -13,87 +13,110 @@ class Game {
     let submit = document.getElementById("submit");
     let submitAnswer = document.getElementById("submitAnswer");
     let restart = document.getElementById("restart");
-    let cancel = document.getElementById("restart-alert")
+    let qeustionAnswerForm = document.getElementById("question-and-answer");
+    let playerStats = document.getElementById("player-stats");
+    let playerform = document.getElementById("player-form");
+    let questionNumber = document.getElementById("question-number");
+  
+    
 
     let answerOutput = [];
     let answerInput = [];
-
     let score;
     let myArray = inputArray;
     let name;
     let count = 0;
+    
     let player = new Player(name, score);
 
+    // Create player and score! --------------------------------------------------------------
     player_button.addEventListener("click", function (e) {
-      player.name = document.getElementById("player-text").value;
-      player.score = 0;
-      console.log(player);
-      player_info.innerHTML = "Name: " + player.name;
-      player_score.innerHTML = "Score: " + player.score;
+      qeustionAnswerForm.classList.remove("hide");
+      playerStats.classList.remove("hide");
       submit.classList.remove("hide");
       player_button.classList.add("hide");
-      let playerform = document.getElementById("player-form");
       playerform.classList.add("hide");
+
+      player.name = document.getElementById("player-text").value;
+      player.score = 0;
+      player_info.innerHTML = "Player: " + player.name;
+      player_score.innerHTML = "Score: " + player.score;
+      console.log(player);
     });
-
-    // Outputing questions, answers and outputing score -----------------------------------------------
-
+    //---------------------------------------------------------------------------------------
+    
+    // Sparar ner alla spans som ska användas för att skriva ut frågor-----------------------
     for (let i = 1; i <= 6; i++) {
       answerOutput.push(document.getElementById("text-input" + [i]));
     }
+    //---------------------------------------------------------------------------------------
 
+    // Håller reda på vilka checkboxes som är i fylda och sparar ner i array-----------------
     quiz_form.addEventListener("change", function (e) {
       answerInput = [];
       for (let i = 1; i <= 6; i++) {
         answerInput.push(document.getElementById("input" + [i]).checked);
       }
     });
+    //---------------------------------------------------------------------------------------
 
+    // En eventlyssnare som kollar om svaret användaren har kryssat i är sant----------------
     submitAnswer.addEventListener("click", function (e) {
       let correct_answer = Object.values(myArray[count].correct_answers);
       let correct_amount = 0;
-      let stringArray = answerInput.map((x) => x.toString());
+      let stringArray = answerInput.map((x) => x.toString()); // mappar igenom och gör booleanska värden till strängar
+
+      // A for loop that checks if user has answered correctly
       for (let i = 0; i < correct_answer.length; i++) {
         if (correct_answer[i] == stringArray[i]) {
           correct_amount++;
+        }
+        if (correct_answer[i] == "true") {
+          answerOutput[i].style.color = "green";
+        }
+        if (correct_answer[i] == "false") {
+          answerOutput[i].style.color = "red";
         }
       }
       if (correct_amount == 6) {
         player.score++;
         player_score.innerHTML = "Score: " + player.score;
       }
-      for (let i = 1; i <= 6; i++) {
-        document.getElementById("input" + [i]).checked = false;
-      }
       answerInput = [];
       count++;
       if (count <= 10) {
         submit.classList.remove("hide");
       }
-      console.log(count);
       submitAnswer.classList.add("hide");
     });
+    //----------------------------------------------------------------------------------------
 
     // Object.values()
     submit.addEventListener("click", function (e) {
       if (count < 10) {
-        // Ittererar genom frågorna
+        let number = count;
+        number++;
+        questionNumber.innerHTML = " Omgång: " + gameCount + "<br />" + "Fråga: " + number;
+        questionNumber.style.color = "orange";
+        for (let i = 0; i < answerOutput.length; i++) {
+          answerOutput[i].style.color = "white";
+        }
+        for (let i = 1; i <= 6; i++) {
+          document.getElementById("input" + [i]).checked = false;
+        }
         submitAnswer.classList.remove("hide");
-        console.log(myArray);
+        
         let answerArray = Object.values(myArray[count].answers);
         submit.textContent = "Nästa fråga!";
         question.textContent = myArray[count].question;
         for (let i = 0; i < answerOutput.length; i++) {
           answerOutput[i].textContent = answerArray[i];
         }
-        for (let i = 1; i <= 6; i++) {
-          document.getElementById("input" + [i]).checked = false;
-        }
+        
         submit.classList.add("hide");
       } else {
         // starta om spelet
-        if (confirm("Vill du starta om?")) {
-            //txt = "You pressed OK!";
+        if (confirm("Du fick: " + player.score + " Poäng! Vill spela igen tryck OK!")) {
             question.textContent = "";
             for (let i = 0; i < answerOutput.length; i++) {
                 answerOutput[i].textContent = "";
@@ -101,15 +124,14 @@ class Game {
             restart.classList.remove("hide");
             submit.classList.add("hide");
           } else {
-            //txt = "You pressed Cancel!";
-            cancel.classList.add("hide");
+            qeustionAnswerForm.classList.add("hide");
           }
         
       }
     });
     restart.addEventListener("click", function (e) {
       player.score = 0;
-
+      gameCount++;
       player_score.innerHTML = "Score: " + player.score;
       count = 0;
       // kan låta användaren välja amount, problem
