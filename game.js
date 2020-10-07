@@ -7,13 +7,12 @@ class Game {
   gameMetod(inputArray, gameCount) {
     let player_button = document.getElementById("playerBtn");
     let player_info = document.getElementById("info-player");
-    let player_score = document.getElementById("score-player");
     let quiz_form = document.getElementById("quiz-form");
     let question = document.getElementById("question");
     let submit = document.getElementById("submit");
     let submitAnswer = document.getElementById("submitAnswer");
     let restart = document.getElementById("restart");
-    let qeustionAnswerForm = document.getElementById("question-and-answer");
+    let questionAnswerForm = document.getElementById("question-and-answer");
     let playerStats = document.getElementById("player-stats");
     let playerform = document.getElementById("player-form");
     let questionNumber = document.getElementById("question-number");
@@ -31,7 +30,7 @@ class Game {
 
     // Create player and score! --------------------------------------------------------------
     player_button.addEventListener("click", function (e) {
-      qeustionAnswerForm.classList.remove("hide");
+      
       playerStats.classList.remove("hide");
       submit.classList.remove("hide");
       player_button.classList.add("hide");
@@ -39,8 +38,8 @@ class Game {
 
       player.name = document.getElementById("player-text").value;
       player.score = 0;
-      player_info.innerHTML = "Player: " + player.name;
-      player_score.innerHTML = "Score: " + player.score;
+      player_info.innerHTML = "Player: " + player.name + "<br />" + "Score: " + player.score;
+      
       console.log(player);
     });
     //---------------------------------------------------------------------------------------
@@ -80,7 +79,7 @@ class Game {
       }
       if (correct_amount == 6) {
         player.score++;
-        player_score.innerHTML = "Score: " + player.score;
+        player_info.innerHTML = "Player: " + player.name + "<br />" + "Score: " + player.score;
       }
       answerInput = [];
       count++;
@@ -94,6 +93,7 @@ class Game {
     // Object.values()
     submit.addEventListener("click", function (e) {
       if (count < 10) {
+        questionAnswerForm.classList.remove("hide");
         let number = count;
         number++;
         questionNumber.innerHTML = " Omgång: " + gameCount + "<br />" + "Fråga: " + number;
@@ -123,8 +123,9 @@ class Game {
               }
             restart.classList.remove("hide");
             submit.classList.add("hide");
+            questionAnswerForm.classList.add("hide");
           } else {
-            qeustionAnswerForm.classList.add("hide");
+            questionAnswerForm.classList.add("hide");
           }
         
       }
@@ -132,7 +133,7 @@ class Game {
     restart.addEventListener("click", function (e) {
       player.score = 0;
       gameCount++;
-      player_score.innerHTML = "Score: " + player.score;
+      player_info.innerHTML = "Player: " + player.name + "<br />" + "Score: " + player.score;
       count = 0;
       // kan låta användaren välja amount, problem
       fetch(

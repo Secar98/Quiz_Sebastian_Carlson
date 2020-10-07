@@ -21,18 +21,16 @@
         <h1>Quiz!</h1>
         <div class="main" id="player-form">
             <form class="player-name">
-                <label for="player">Spelarens namn:</label>
-                <input type="text" name="player" id="player-text" placeholder="Sebastian">
+                <input type="text" name="player" id="player-text" placeholder="Skriv in ditt namn">
             </form>
             <div class="button-div">
-                <button id="playerBtn" class="player-button">Submit</button>
+                <button id="playerBtn" class="player-button">Klar</button>
             </div>
         </div>
 
 
         <div id="player-stats" class="player-info hide">
             <p id="info-player"></p>
-            <p id="score-player"></p>
         </div>
         <div id="question-and-answer" class="hide">
             <div class="quiz-question">
@@ -65,16 +63,17 @@
                     <span id="text-input6"></span>
                 </label>
             </div>
-            <div class="button">
-                <button id="submitAnswer" class="btn hide">Submit Answer</button>
-            </div>
-            <div class="button">
-                <button id="submit" class="btn hide">Läs in fråga</button>
-            </div>
-            <div class="button">
-                <button id="restart" class="btn hide">Läs in nästa Spel!</button>
-            </div>
         </div>
+        <div class="button">
+            <button id="submitAnswer" class="btn hide">Klar</button>
+        </div>
+        <div class="button">
+            <button id="submit" class="btn hide">Läs in frågor</button>
+        </div>
+        <div class="button">
+            <button id="restart" class="btn hide">Läs in nästa Spel!</button>
+        </div>
+
         <script src="quiz.js"></script>
         <script src="player.js"></script>
         <script src="main.js"></script>
