@@ -3,5 +3,3 @@ document.addEventListener('DOMContentLoaded', function (e) {
     quiz.fetchApi();
 });
 
-
-/*Försöker fixa amount of questions on change fo select box*/

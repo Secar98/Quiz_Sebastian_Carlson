@@ -16,8 +16,6 @@ class Game {
     let playerform = document.getElementById("player-form");
     let questionNumber = document.getElementById("question-number");
 
-
-
     let answerOutput = [];
     let answerInput = [];
     let score;
@@ -35,8 +33,7 @@ class Game {
       player_button.classList.add("hide");
       playerform.classList.add("hide");
 
-      player.name = document.getElementById("player-text").value;
-      player.score = 0;
+      player.CreatePlayer();
       player_info.innerHTML = "Player: " + player.name + "<br />" + "Score: " + player.score;
 
       console.log(player);
@@ -57,7 +54,7 @@ class Game {
       }
     });
     //----------------------------------------------------------------------------------------
-
+  
     // An eventlistener that checks if user has answered correctly----------------------------
     submitAnswer.addEventListener("click", function (e) {
       submitAnswer.classList.add("hide");
